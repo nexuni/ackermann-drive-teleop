@@ -70,12 +70,13 @@ class AckermannDriveKeyop:
         self.steering_angle = 0
         self.motors_pub = rospy.Publisher(
             cmd_topic, AckermannDriveStamped, queue_size=1)
-        rospy.Timer(rospy.Duration(1.0/5.0), self.pub_callback, oneshot=False)
+        rospy.Timer(rospy.Duration(1.0/10.0), self.pub_callback, oneshot=False)
         self.print_state()
         self.key_loop()
 
     def pub_callback(self, event):
         ackermann_cmd_msg = AckermannDriveStamped()
+        ackermann_cmd_msg.header.stamp = rospy.Time.now()
         ackermann_cmd_msg.drive.speed = self.speed
         ackermann_cmd_msg.drive.steering_angle = self.steering_angle
         self.motors_pub.publish(ackermann_cmd_msg)
