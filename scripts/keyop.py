@@ -120,6 +120,12 @@ class AckermannDriveKeyop:
                         self.steering_angle,
                         self.steering_angle_range[0],
                         self.steering_angle_range[1])
+
+                if (abs(self.speed) < 1e-2):
+                    self.speed = 0.0
+                if (abs(self.steering_angle) < 1e-2):
+                    self.steering_angle = 0.0
+                    
                 self.print_state()
             elif key == '\x03' or key == '\x71':  # ctr-c or q
                 break
