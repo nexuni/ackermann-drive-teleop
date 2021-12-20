@@ -50,8 +50,8 @@ class AckermannDriveKeyop:
             max_speed = float(args[0])
             max_steering_angle = float(args[1])
         else:
-            max_speed = 0.2
-            max_steering_angle = 0.7
+            max_speed = 0.5
+            max_steering_angle = 0.4
 
         if len(args) > 2:
             cmd_topic = '/' + args[2]
@@ -120,6 +120,11 @@ class AckermannDriveKeyop:
                         self.steering_angle,
                         self.steering_angle_range[0],
                         self.steering_angle_range[1])
+                if (abs(self.steering_angle) < 1e-2):
+                    self.steering_angle = 0.0
+                if (abs(self.speed) < 1e-2):
+                    self.speed = 0.0
+                    
                 self.print_state()
             elif key == '\x03' or key == '\x71':  # ctr-c or q
                 break
